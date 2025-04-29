@@ -7,6 +7,21 @@ class HomeTab extends StatelessWidget {
   final Function(Map<String, dynamic>) onAddToCart;
   const HomeTab({super.key, required this.onAddToCart});
 
+  final List<Map<String, dynamic>> categories = const [
+    {'icon': Icons.phone_android, 'label': 'Elektronik'},
+    {'icon': Icons.checkroom, 'label': 'Fashion'},
+    {'icon': Icons.kitchen, 'label': 'Dapur'},
+    {'icon': Icons.toys, 'label': 'Mainan'},
+    {'icon': Icons.book, 'label': 'Buku'},
+    {'icon': Icons.sports_basketball, 'label': 'Olahraga'},
+    {'icon': Icons.local_grocery_store, 'label': 'Sembako'},
+    {'icon': Icons.tv, 'label': 'TV & Audio'},
+    {'icon': Icons.computer, 'label': 'Komputer'},
+    {'icon': Icons.watch, 'label': 'Aksesoris'},
+    {'icon': Icons.chair, 'label': 'Perabot'},
+    {'icon': Icons.healing, 'label': 'Kesehatan'},
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,10 +37,10 @@ class HomeTab extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 12),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(8),
@@ -38,6 +53,19 @@ class HomeTab extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
+            const SizedBox(width: 8),
+            IconButton(
+              icon: const Icon(Icons.message, color: Colors.white),
+              onPressed: () {
+                // fungsi pesan
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.shopping_cart, color: Colors.white),
+              onPressed: () {
+                // fungsi keranjang
+              },
             ),
           ],
         ),
@@ -57,6 +85,34 @@ class HomeTab extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
+            Container(
+              height: 100,
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: categories.length,
+                separatorBuilder: (_, __) => const SizedBox(width: 16),
+                itemBuilder: (context, index) {
+                  final category = categories[index];
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 28,
+                        backgroundColor: Colors.orange.shade100,
+                        child: Icon(category['icon'], color: Colors.orange),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        category['label'],
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 8),
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -94,9 +150,16 @@ class HomeTab extends StatelessWidget {
   }
 
   Widget bannerItem(String imagePath) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: Image.asset(imagePath, fit: BoxFit.cover, width: double.infinity),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.asset(
+          imagePath,
+          fit: BoxFit.cover,
+          width: double.infinity,
+        ),
+      ),
     );
   }
 }
